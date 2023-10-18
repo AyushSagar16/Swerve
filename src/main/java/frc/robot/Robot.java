@@ -4,7 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveTeleop;
@@ -27,9 +29,17 @@ public class Robot extends TimedRobot {
     // Xbox Controller
     private final CommandXboxController controller_ = new CommandXboxController(0);
 
+    // Simulation
+    private final Simulation simulation_ = new Simulation();
+
+    // private final Field2d field_ = new Field2d();
+
+
     @Override
     public void robotInit() {
         drive_.setDefaultCommand(new DriveTeleop(drive_, robot_state_, controller_));
+        simulation_.update();
+        // field_.setRobotPose(0, 6, Rotation2d.fromDegrees(14));
     }
 
     @Override
@@ -67,7 +77,9 @@ public class Robot extends TimedRobot {
     public void testPeriodic() {}
 
     @Override
-    public void simulationInit() {}
+    public void simulationInit() {
+        simulation_.update();
+    }
 
     @Override
     public void simulationPeriodic() {}
